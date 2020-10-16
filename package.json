@@ -1,0 +1,21 @@
+{
+  "name": "@dantasticdan/blockchain-gps-tracker",
+  "version": "0.0.1",
+  "description": "GPS Tracker Test Plugin using custom transactions on an Ark bridgechain",
+  "author": "dantastic",
+  "main": "src/index.js",
+  "dependencies": {},
+  "homepage": "https://github.com/dantasticdan/blockchain-gps-tracker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dantasticdan/blockchain-gps-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dantasticdan/blockchain-gps-tracker/issues"
+  },
+  "keywords": [
+    "arkecosystem",
+    "bridgechain",
+    "plugin"
+  ]
+}

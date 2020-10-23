@@ -4,7 +4,14 @@
   "description": "GPS Tracker Test Plugin using custom transactions on an Ark bridgechain",
   "author": "dantastic",
   "main": "src/index.js",
-  "dependencies": {},
+  "scripts": {
+    "t": "node ./src/test.js --txt t"
+  },
+  "dependencies": {
+    "@arkecosystem/core-event-emitter": "^2.6.0-next.7",
+    "@arkecosystem/core-transactions": "^2.6.0-next.7",
+    "@arkecosystem/crypto": "^2.6.0-next.7"
+  },
   "homepage": "https://github.com/dantasticdan/blockchain-gps-tracker",
   "repository": {
     "type": "git",

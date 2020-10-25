@@ -1,3 +1,6 @@
+const GPSHandler = require("./handlers/tx-handler");
+const Transactions = require('@arkecosystem/core-transactions');
+
 const pkg = require('../package.json');
 exports.plugin = {
 	pkg: require('../package.json'),

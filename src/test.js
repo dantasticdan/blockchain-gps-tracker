@@ -30,14 +30,25 @@ Crypto.Transactions.TransactionRegistry.registerTransactionType(GPSTransaction);
 
 let transactions = [];
 
-if(args.txt === 't') {
+if(args.txt === 'g') {
 	transactions.push(GPSBuilder.gps(Date.now(), '1.111111', '-180.222222')
 		.amount('1') 
 		.recipientId(address_rx)
 		.nonce(nonce)
 		.vendorField(args.vf)
 		.sign(passphrase_tx));
+
+} else if(args.txt === 't') {
+	transactions.push(TransactionBuilder.amount('1')
+		.version(2)
+		.recipientId(address_rx)
+		.vendorField(args.vf)
+		.nonce(nonce)
+		.fee('1')
+		.sign(passphrase_rx));
 }
+
+
 
 let payload = {
 	transactions: []

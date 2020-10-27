@@ -29,8 +29,8 @@ class GPSBuilder extends Crypto.Transactions.TransactionBuilder {
 
 		struct.amount = this.data.amount;
 		struct.asset = this.data.asset;
-		//struct.vendorField = this.data.vendorField;
-		//struct.recipientId = this.data.recipientId;
+		struct.vendorField = this.data.vendorField;
+		struct.recipientId = this.data.recipientId;
 
 		return struct;
 	}

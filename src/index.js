@@ -1,10 +1,9 @@
 const GPSHandler = require("./handlers/tx-handler");
 const Transactions = require('@arkecosystem/core-transactions');
 
-const pkg = require('../package.json');
 exports.plugin = {
 	pkg: require('../package.json'),
-	defaults: {},
+	defaults: require('./defaults'),
 	alias: pkg.name,
 	async register(container, options) {
 		const logger = container.resolvePlugin('logger');
@@ -21,7 +20,4 @@ exports.plugin = {
 
 		logger.info(`[${this.alias}] GPS tracker transaction registered.`);
 	}
-
-
-
 };

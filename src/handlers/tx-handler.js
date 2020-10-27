@@ -13,11 +13,13 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 		return [];
 	}
 
-	isActivated() {
-		return true;
+	walletAttributes() {
+		return [
+			WalletAttributes.IS_REGISTERED_AS_SCOOTER
+		];
 	}
 
-	hasVendorField() {
+	isActivated() {
 		return true;
 	}
 
@@ -30,7 +32,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 			for(const transaction of transactions) {
 				const wallet = walletManager.findByAddress(transaction.recipientId);
 
-				wallet.setAttribute(WalletAttributes.IS_RENTED, true);
+				wallet.setAttribute(WalletAttributes.IS_REGISTERED_AS_SCOOTER, true);
 				walletManager.reindex(wallet);
 			}
 		}
@@ -42,7 +44,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 		}
 
 		await super.throwIfCannotBeApplied(transaction, sender, walletManager);
-		/*
+		
 		if(sender.getAttribute(WalletAttributes.IS_REGISTERED_AS_SCOOTER)) {
 			throw new Errors.ScooterIsNotAllowedToRentOrFinish();
 		}
@@ -55,7 +57,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 
 		if(recipient.getAttribute(WalletAttributes.IS_RENTED)) {
 			throw new Errors.ScooterIsAlreadyRented();
-		}*/
+		}
 	}
 
 	emitEvents(transaction, emitter) {
@@ -95,17 +97,27 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 	}
 
 	async applyToRecipient(transaction, walletManager) {
-		const recipient = walletManager.findByAddress(transaction.data.recipientId);
+		await super.applyToSender(transaction, walletManager);
 
-		recipient.setAttribute(WalletAttributes.IS_RENTED, true);
-		walletManager.reindex(recipient);
+		const sender = walletManager.findByPublicKey(transaction.data.senderPublicKey);
+
+		sender.setAttribute(WalletAttributes.IS_REGISTERED_AS_SCOOTER, true);
+		walletManager.reindex(sender);
 	}
 
 	async revertForRecipient(transaction, walletManager) {
-		const recipient = walletManager.findByAddress(transaction.data.recipientId);
+		await super.revertForSender(transaction, walletManager);
 
-		recipient.setAttribute(WalletAttributes.IS_RENTED, false);
-		walletManager.reindex(recipient);
+		const sender = walletManager.findByPublicKey(transaction.data.senderPublicKey);
+
+		sender.setAttribute(WalletAttributes.IS_REGISTERED_AS_SCOOTER, false);
+		walletManager.reindex(sender);
+	}
+	
+	async applyToRecipient(transaction, walletManager) {
+	}
+
+	async revertForRecipient(transaction, walletManager) {
 	}
 }
 

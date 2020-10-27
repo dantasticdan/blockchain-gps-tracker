@@ -12,6 +12,12 @@ class GPSBuilder extends Crypto.Transactions.TransactionBuilder {
 		this.data.asset = {};
 	}
 
+	sessionId(sha256) {
+		this.data.asset.sessionId = sha256;
+
+		return this.instance();
+	}
+
 	gps(timestamp, latitude, longitude) {
 		const date = new Date(timestamp);
 
@@ -20,6 +26,12 @@ class GPSBuilder extends Crypto.Transactions.TransactionBuilder {
 			latitude: latitude,
 			longitude: longitude
 		};
+
+		return this.instance();
+	}
+
+	rate(amount) {
+		this.data.asset.rate = Crypto.Utils.BigNumber.make(amount);
 
 		return this.instance();
 	}

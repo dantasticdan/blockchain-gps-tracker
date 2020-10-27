@@ -4,7 +4,7 @@ const Transactions = require('@arkecosystem/core-transactions');
 exports.plugin = {
 	pkg: require('../package.json'),
 	defaults: require('./defaults'),
-	alias: pkg.name,
+	alias: 'dantasticdan:gps-transactions',
 	async register(container, options) {
 		const logger = container.resolvePlugin('logger');
 		//logger.info('Hello World!');

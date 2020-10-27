@@ -2,7 +2,7 @@
   "name": "@dantasticdan/blockchain-gps-tracker",
   "version": "0.0.1",
   "description": "GPS Tracker Test Plugin using custom transactions on an Ark bridgechain",
-  "author": "dantastic",
+  "author": "dantasticdan",
   "main": "src/index.js",
   "scripts": {
     "t": "node ./src/test.js --txt t"

@@ -29,15 +29,16 @@ class GPSTransaction extends Crypto.Transactions.Transaction {
 	}
 
 	serialize() {
-		const buffer = new ByteBuffer(8 + 21 + 4 + 8 + 8 + 32 + 8, true);
+		//const buffer = new ByteBuffer(8 + 21 + 4 + 8 + 8 + 32 + 8, true);
+		const buffer = new ByteBuffer(8 + 21 + 4 + 8 + 8, true);
 
 		buffer.writeUint64(Long.fromString(this.data.amount.toString())); // 8
 		buffer.append(Crypto.Identities.Address.toBuffer(this.data.recipientId).addressBuffer); // 21
 		buffer.writeUint32(this.data.asset.gps.timestamp); // 4
 		buffer.writeInt64(parseFloat(this.data.asset.gps.latitude).toFixed(6).replace('.', '')); // 8
 		buffer.writeInt64(parseFloat(this.data.asset.gps.longitude).toFixed(6).replace('.', '')); // 8
-		buffer.append(Buffer.from(this.data.asset.sessionId, 'hex')); // 32
-		buffer.writeUint64(this.data.asset.rate.toString()); // 8
+		//buffer.append(Buffer.from(this.data.asset.sessionId, 'hex')); // 32
+		//buffer.writeUint64(this.data.asset.rate.toString()); // 8
 
 		return buffer;
 	}
@@ -51,8 +52,8 @@ class GPSTransaction extends Crypto.Transactions.Transaction {
 				latitude: formatGpsCoordinate(buffer.readInt64().toString()),
 				longitude: formatGpsCoordinate(buffer.readInt64().toString()),
 			},
-			sessionId: buffer.readBytes(32).toBuffer().toString('hex'),
-			rate: Crypto.Utils.BigNumber.make(buffer.readUint64().toString()),
+			//sessionId: buffer.readBytes(32).toBuffer().toString('hex'),
+			//rate: Crypto.Utils.BigNumber.make(buffer.readUint64().toString()),
 		};
 		this.data.asset.gpsCount = 1;
 		this.data.asset.gps.human = (new Date(this.data.asset.gps.timestamp * 1000)).toJSON();

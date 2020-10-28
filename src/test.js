@@ -1,11 +1,11 @@
 const Crypto = require("@arkecosystem/crypto");
-const GPSBuilder = require("./builders/rental-start-builder");
+//const GPSBuilder = require("./builders/rental-start-builder");
 //const ScooterRegistrationBuilder = require("./builders/scooter-registration-builder");
-//const RentalStartBuilder = require("./builders/rental-start-builder");
+const RentalStartBuilder = require("./builders/rental-start-builder");
 //const RentalFinishBuilder = require("./builders/rental-finish-builder");
-const GPSTransaction = require("./transactions/tx-transaction");
+//const GPSTransaction = require("./transactions/rental-start-transaction");
 //const ScooterRegistrationTransaction = require("./transactions/scooter-registration-transaction");
-//const RentalStartTransaction = require("./transactions/rental-start-transaction");
+const RentalStartTransaction = require("./transactions/rental-start-transaction");
 //const RentalFinishTransaction = require("./transactions/rental-finish-transaction");
 const TransactionBuilder = Crypto.Transactions.BuilderFactory.transfer().instance();
 const childProcess = require('child_process');
@@ -23,9 +23,9 @@ console.log(args);
 // https://api.radians.nl/api/v2/node/configuration/crypto
 Crypto.Managers.configManager.setConfig(config);
 
-Crypto.Transactions.TransactionRegistry.registerTransactionType(GPSTransaction);
+//Crypto.Transactions.TransactionRegistry.registerTransactionType(GPSTransaction);
 //Crypto.Transactions.TransactionRegistry.registerTransactionType(ScooterRegistrationTransaction);
-//Crypto.Transactions.TransactionRegistry.registerTransactionType(RentalStartTransaction);
+Crypto.Transactions.TransactionRegistry.registerTransactionType(RentalStartTransaction);
 //Crypto.Transactions.TransactionRegistry.registerTransactionType(RentalFinishTransaction);
 
 let transactions = [];
@@ -40,7 +40,7 @@ if(args.txt === 'g') {
 
 } */
 if(args.txt === 'g') {
-	transactions.push(GPSBuilder.sessionId(Crypto.Crypto.HashAlgorithms.sha256('hello').toString('hex'))
+	transactions.push(RentalStartBuilder.sessionId(Crypto.Crypto.HashAlgorithms.sha256('hello').toString('hex'))
 	//transactions.push(RentalStartBuilder.sessionId('1234300000000000000000000000000000000000000000000000000000000000')
 		.gps(Date.now(), '1.111111', '-180.222222')
 		.rate('5')

@@ -1,9 +1,9 @@
-const Schema = require("./schemas").GPSSchema;
+const Schema = require("./schemas").RentalStart;
 const Crypto = require("@arkecosystem/crypto");
 const ByteBuffer = require("bytebuffer");
 const Long = require('long');
 
-class GPSTransaction extends Crypto.Transactions.Transaction {
+class RentalStartTransaction extends Crypto.Transactions.Transaction {
 	static get typeGroup() {
 		return Schema.properties.typeGroup.const;
 	}
@@ -63,4 +63,4 @@ function formatGpsCoordinate(str) {
 	return str.slice(0, str.length - 6) + '.' + str.slice(-6);
 }
 
-module.exports = GPSTransaction;
+module.exports = RentalStartTransaction;

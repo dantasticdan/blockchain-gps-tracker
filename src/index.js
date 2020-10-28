@@ -1,4 +1,4 @@
-const GPSHandler = require("./handlers/tx-handler");
+const RentalStartHandler = require("./handlers/rental-start-handler");
 const Transactions = require('@arkecosystem/core-transactions');
 
 exports.plugin = {
@@ -14,10 +14,10 @@ exports.plugin = {
 			return;
 		}
 
-		logger.info(`[${this.alias}] Registering GPS tracker transaction...`);
+		logger.info(`[${this.alias}] Registering GPS transaction...`);
 
-		await Transactions.Handlers.Registry.registerTransactionHandler(GPSHandler);
+		await Transactions.Handlers.Registry.registerTransactionHandler(RentalStartHandler);
 
-		logger.info(`[${this.alias}] GPS tracker transaction registered.`);
+		logger.info(`[${this.alias}] GPS transaction registered.`);
 	}
 };

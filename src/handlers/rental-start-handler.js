@@ -1,12 +1,12 @@
-const GPSTransaction = require('../transactions/tx-transaction');
+const RentalStartTransaction = require('../transactions/rental-start-transaction');
 const Transactions = require('@arkecosystem/core-transactions');
 const WalletAttributes = require('./wallet-attributes');
 const Errors = require('../errors');
 const Events = require('../events');
 
-class GPSHandler extends Transactions.Handlers.TransactionHandler {
+class RentalStartHandler extends Transactions.Handlers.TransactionHandler {
 	getConstructor() {
-		return GPSTransaction;
+		return RentalStartTransaction;
 	}
 
 	dependencies() {
@@ -48,7 +48,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 		}
 
 		await super.throwIfCannotBeApplied(transaction, sender, walletManager);
-		
+
 		if(sender.getAttribute(WalletAttributes.IS_REGISTERED_AS_SCOOTER)) {
 			throw new Errors.ScooterIsNotAllowedToRentOrFinish();
 		}
@@ -56,7 +56,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 		const recipient = walletManager.findByAddress(transaction.data.recipientId);
 
 		if(!recipient.getAttribute(WalletAttributes.IS_REGISTERED_AS_SCOOTER)) {
-			throw new Errors.WalletIsNotRegisterdAsAScooter//();
+			throw new Errors.WalletIsNotRegisterdAsAScooter();
 		}
 
 		if(recipient.getAttribute(WalletAttributes.IS_RENTED)) {
@@ -115,4 +115,4 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 	}
 }
 
-module.exports = GPSHandler;
+module.exports = RentalStartHandler;

@@ -2,8 +2,8 @@ const SchemaParameters = require("./schema-parameters");
 const Types = require("./types");
 
 module.exports = {
-	GPSSchema: {
-		$id: "GPS",
+	RentalStart: {
+		$id: "rentalStart",
 		required: ["asset", "type", "typeGroup", "recipientId"],
 		properties: {
 			type: {

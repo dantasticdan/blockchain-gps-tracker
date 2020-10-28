@@ -1,13 +1,13 @@
-const GPSTransaction = require('../transactions/tx-transaction');
+const RentalStartTransaction = require('../transactions/rental-start-transaction');
 const Crypto = require('@arkecosystem/crypto');
 
-class GPSBuilder extends Crypto.Transactions.TransactionBuilder {
+class RentalStartBuilder extends Crypto.Transactions.TransactionBuilder {
 	constructor() {
 		super();
-		this.data.type = GPSTransaction.type;
-		this.data.typeGroup = GPSTransaction.typeGroup;
+		this.data.type = RentalStartTransaction.type;
+		this.data.typeGroup = RentalStartTransaction.typeGroup;
 		this.data.version = 2;
-		this.data.fee = Crypto.Utils.BigNumber.make('1');
+		this.data.fee = RentalStartTransaction.defaultStaticFee;
 		this.data.amount = Crypto.Utils.BigNumber.ZERO;
 		this.data.asset = {};
 	}
@@ -41,8 +41,8 @@ class GPSBuilder extends Crypto.Transactions.TransactionBuilder {
 
 		struct.amount = this.data.amount;
 		struct.asset = this.data.asset;
-		//struct.vendorField = this.data.vendorField;
-		//struct.recipientId = this.data.recipientId;
+		struct.vendorField = this.data.vendorField;
+		struct.recipientId = this.data.recipientId;
 
 		return struct;
 	}
@@ -50,7 +50,6 @@ class GPSBuilder extends Crypto.Transactions.TransactionBuilder {
 	instance() {
 		return this;
 	}
-
 }
 
-module.exports = new GPSBuilder();
+module.exports = new RentalStartBuilder();

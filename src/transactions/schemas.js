@@ -7,7 +7,7 @@ module.exports = {
 		required: ["asset", "type", "typeGroup", "recipientId"],
 		properties: {
 			type: {
-				transactionType: Types.TRANSACTION_TYPE
+				transactionType: Types.RENTAL_START_TYPE
 			},
 			typeGroup: {
 				const: Types.TYPE_GROUP

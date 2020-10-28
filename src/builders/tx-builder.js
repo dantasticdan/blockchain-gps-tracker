@@ -7,7 +7,7 @@ class GPSBuilder extends Crypto.Transactions.TransactionBuilder {
 		this.data.type = GPSTransaction.type;
 		this.data.typeGroup = GPSTransaction.typeGroup;
 		this.data.version = 2;
-		this.data.fee = GPSTransaction.defaultStaticFee;
+		this.data.fee = Crypto.Utils.BigNumber.make('1');
 		this.data.amount = Crypto.Utils.BigNumber.ZERO;
 		this.data.asset = {};
 	}
@@ -41,8 +41,8 @@ class GPSBuilder extends Crypto.Transactions.TransactionBuilder {
 
 		struct.amount = this.data.amount;
 		struct.asset = this.data.asset;
-		struct.vendorField = this.data.vendorField;
-		struct.recipientId = this.data.recipientId;
+		//struct.vendorField = this.data.vendorField;
+		//struct.recipientId = this.data.recipientId;
 
 		return struct;
 	}

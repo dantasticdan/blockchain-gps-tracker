@@ -15,7 +15,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 
 	walletAttributes() {
 		return [
-			WalletAttributes.IS_REGISTERED_AS_SCOOTER
+			WalletAttributes.IS_RENTED
 		];
 	}
 
@@ -65,7 +65,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 	}
 
 	emitEvents(transaction, emitter) {
-		emitter.emit(Events.RENTAL_FINISH, transaction.data);
+		emitter.emit(Events.RENTAL_START, transaction.data);
 	}
 
 	async canEnterTransactionPool(data, pool, processor) {
@@ -82,7 +82,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 		});
 
 		if(transactions.length > 1) {
-			processor.pushError(data, 'ERR_CONFLICT', `Address "${data.recipientId}" is already in use.`);
+			processor.pushError(data, 'ERR_CONFLICT', `Scooter with address "${data.recipientId}" is already rented.`);
 
 			return false;
 		}
@@ -92,7 +92,7 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 		});
 
 		if(transactions.length > 1) {
-			processor.pushError(data, 'ERR_PENDING', `Address "${data.recipientId}" is already in the transaction pool.`);
+			processor.pushError(data, 'ERR_PENDING', `Rental start request for scooter with address "${data.recipientId}" is already in the transaction pool.`);
 
 			return false;
 		}
@@ -101,27 +101,17 @@ class GPSHandler extends Transactions.Handlers.TransactionHandler {
 	}
 
 	async applyToRecipient(transaction, walletManager) {
-		await super.applyToSender(transaction, walletManager);
+		const recipient = walletManager.findByAddress(transaction.data.recipientId);
 
-		const sender = walletManager.findByPublicKey(transaction.data.senderPublicKey);
-
-		sender.setAttribute(WalletAttributes.IS_RENTED, true);
-		walletManager.reindex(sender);
+		recipient.setAttribute(WalletAttributes.IS_RENTED, true);
+		walletManager.reindex(recipient);
 	}
 
 	async revertForRecipient(transaction, walletManager) {
-		await super.revertForSender(transaction, walletManager);
+		const recipient = walletManager.findByAddress(transaction.data.recipientId);
 
-		const sender = walletManager.findByPublicKey(transaction.data.senderPublicKey);
-
-		sender.setAttribute(WalletAttributes.IS_RENTED, false);
-		walletManager.reindex(sender);
-	}
-
-	async applyToRecipient(transaction, walletManager) {
-	}
-
-	async revertForRecipient(transaction, walletManager) {
+		recipient.setAttribute(WalletAttributes.IS_RENTED, false);
+		walletManager.reindex(recipient);
 	}
 }
 

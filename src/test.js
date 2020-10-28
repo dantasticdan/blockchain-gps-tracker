@@ -29,7 +29,7 @@ Crypto.Transactions.TransactionRegistry.registerTransactionType(GPSTransaction);
 //Crypto.Transactions.TransactionRegistry.registerTransactionType(RentalFinishTransaction);
 
 let transactions = [];
-
+/*
 if(args.txt === 'g') {
 	transactions.push(GPSBuilder.gps(Date.now(), '1.111111', '-180.222222')
 		.amount('1') 
@@ -38,7 +38,19 @@ if(args.txt === 'g') {
 		.vendorField(args.vf)
 		.sign(passphrase_tx));
 
-} else if(args.txt === 't') {
+} */
+if(args.txt === 'g') {
+	transactions.push(RentalStartBuilder.sessionId(Crypto.Crypto.HashAlgorithms.sha256('hello').toString('hex'))
+	//transactions.push(RentalStartBuilder.sessionId('1234300000000000000000000000000000000000000000000000000000000000')
+		.gps(Date.now(), '1.111111', '-180.222222')
+		.rate('5')
+		.amount('60')  //this determines the ride length(1 minute)
+		.recipientId(address_rx)
+		.nonce(nonce)
+		.vendorField(args.vf)
+		.sign(passphrase_tx));
+}
+else if(args.txt === 't') {
 	transactions.push(TransactionBuilder.amount('1')
 		.version(2)
 		.recipientId(address_rx)

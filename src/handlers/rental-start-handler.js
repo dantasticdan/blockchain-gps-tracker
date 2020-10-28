@@ -29,7 +29,7 @@ class RentalStartHandler extends Transactions.Handlers.TransactionHandler {
 
 	async bootstrap(connection, walletManager) {
 		const reader = await Transactions.TransactionReader.create(connection, this.getConstructor());
-		/*
+		
 		while(reader.hasNext()) {
 			const transactions = await reader.read();
 
@@ -40,36 +40,36 @@ class RentalStartHandler extends Transactions.Handlers.TransactionHandler {
 				walletManager.reindex(wallet);
 			}
 		}
-		*/
+		
 	}
 
 	async throwIfCannotBeApplied(transaction, sender, walletManager) {
-		/*
+		
 		if(!transaction.data.asset.sessionId || !transaction.data.asset.gps || !transaction.data.asset.rate) {
 			throw new Errors.IncompleteAssetError();
 		}
-*/
+
 		await super.throwIfCannotBeApplied(transaction, sender, walletManager);
-/*
+
 		if(sender.getAttribute(WalletAttributes.IS_REGISTERED_AS_SCOOTER)) {
 			throw new Errors.ScooterIsNotAllowedToRentOrFinish();
 		}
-*/
+
 		const recipient = walletManager.findByAddress(transaction.data.recipientId);
-/*
+
 		if(!recipient.getAttribute(WalletAttributes.IS_REGISTERED_AS_SCOOTER)) {
 			throw new Errors.WalletIsNotRegisterdAsAScooter();
 		}
-*/
+
 		if(recipient.getAttribute(WalletAttributes.IS_RENTED)) {
 			throw new Errors.ScooterIsAlreadyRented();
 		}
 	}
-/*
+
 	emitEvents(transaction, emitter) {
 		emitter.emit(Events.RENTAL_START, transaction.data);
 	}
-*/
+
 	async canEnterTransactionPool(data, pool, processor) {
 		const error = await this.typeFromSenderAlreadyInPool(data, pool, processor);
 
@@ -103,21 +103,21 @@ class RentalStartHandler extends Transactions.Handlers.TransactionHandler {
 	}
 
 	async applyToRecipient(transaction, walletManager) {
-		/*
+		
 		const recipient = walletManager.findByAddress(transaction.data.recipientId);
 
 		recipient.setAttribute(WalletAttributes.IS_RENTED, true);
 		walletManager.reindex(recipient);
-		*/
+		
 	}
 
 	async revertForRecipient(transaction, walletManager) {
-		/*
+		
 		const recipient = walletManager.findByAddress(transaction.data.recipientId);
 
 		recipient.setAttribute(WalletAttributes.IS_RENTED, false);
 		walletManager.reindex(recipient);
-		*/
+		
 	}
 }
 
